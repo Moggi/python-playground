@@ -2,7 +2,7 @@
 import socket
 
 
-def test_internet_connection(host="8.8.8.8", port=53, timeout=3):
+def test_connection(host="8.8.8.8", port=53, timeout=3):
     """
     Host: 8.8.8.8 (google-public-dns-a.google.com)
     OpenPort: 53/tcp
@@ -16,4 +16,4 @@ def test_internet_connection(host="8.8.8.8", port=53, timeout=3):
         print(ex)
         return False
 
-print(test_internet_connection())
+print(test_connection())
