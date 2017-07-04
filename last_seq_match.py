@@ -17,13 +17,20 @@ if len(sys.argv) != 3:
 file1 = sys.argv[1]
 file2 = sys.argv[2]
 
+retryCount = 10
+
 with open(file2) as f:
     src = f.read()
+    x = 0
     for line in open(file1):
         line = line.strip()
         if(line in src):
             last_match = line
+            x = 0
         else:
-            break
+            if x >= retryCount:
+                break
+            else:
+                x+=1
 
 print( last_match if last_match else 'No matches' )
