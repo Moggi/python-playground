@@ -28,7 +28,7 @@ with open(file2) as f:
             last_match = line
             x = 0
         else:
-            if x >= retryCount:
+            if x <= retryCount:
                 break
             else:
                 x+=1
