@@ -6,9 +6,7 @@ Everything from Jan 2017
 ## Dependencies:
 
 - Python 2.7
-- Python 3    (3.6.0)
+- Python 3    (3.5+)
 - [Futures](https://pypi.python.org/pypi/futures)
-
-```sh
-pip install futures
-```
+- [Requests](https://pypi.python.org/pypi/requests)
+- [Spotipy](https://github.com/plamere/spotipy)
