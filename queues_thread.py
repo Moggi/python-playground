@@ -1,7 +1,7 @@
 # From tutorialspoint.com about Python Multithreaded Programming
 # https://www.tutorialspoint.com/python/python_multithreading.htm
 
-#!/usr/bin/python
+# !/usr/bin/python
 
 import Queue
 import threading
@@ -9,16 +9,19 @@ import time
 
 exitFlag = 0
 
+
 class myThread (threading.Thread):
     def __init__(self, threadID, name, q):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
         self.q = q
+
     def run(self):
-        print ("Starting " + self.name)
+        print("Starting " + self.name)
         process_data(self.name, self.q)
-        print ("Exiting " + self.name)
+        print("Exiting " + self.name)
+
 
 def process_data(threadName, q):
     while not exitFlag:
@@ -26,7 +29,7 @@ def process_data(threadName, q):
         if not workQueue.empty():
             data = q.get()
             queueLock.release()
-            print( "%s processing %s" % (threadName, data))
+            print("%s processing %s" % (threadName, data))
         else:
             queueLock.release()
         time.sleep(1)
@@ -61,4 +64,5 @@ exitFlag = 1
 # Wait for all threads to complete
 for t in threads:
     t.join()
-print ("Exiting Main Thread")
+
+print("Exiting Main Thread")

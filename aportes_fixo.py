@@ -1,27 +1,30 @@
 
-import os, sys
+import os
+import sys
 
 if(len(sys.argv) < 4):
-    print('usage: python aportes_fixo <capital_inicial> <aportes_mensais> <taxa_mensal>')
+    print(
+        'usage: python aportes_fixo <capital_inicial>' + 
+        ' <aportes_mensais> <taxa_mensal>')
     exit()
 
 capital_inicial = float(sys.argv[1])
 aportes_mensais = int(sys.argv[2])
-taxa_mensal     = float(sys.argv[3])
+taxa_mensal = float(sys.argv[3])
 
-taxa_mensal     = (taxa_mensal/100) if taxa_mensal >= 0 else 1
+taxa_mensal = (taxa_mensal/100) if taxa_mensal >= 0 else 1
 
 capital_investido = capital_inicial
 
 valor_anual = capital_inicial
 
-it = 40 # 40 anos
-for it in range(1, 40 +1):
+it = 40  # 40 anos
+for it in range(1, 40 + 1):
     print('============')
     print('Ano: %d' % it)
 
     valor_mensal = valor_anual
-    for mes in range(1, 12 +1):
+    for mes in range(1, 12 + 1):
         capital_investido += aportes_mensais
         valor_mensal = (valor_mensal+aportes_mensais)*(1+taxa_mensal)
         # print('\tValor Mensal: %.2f' % valor_mensal )

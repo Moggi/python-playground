@@ -8,7 +8,7 @@ if len(sys.argv) > 1:
     if len(sys.argv) > 2:
         api_key = str(sys.argv[2])
 else:
-    print ("Usage: %s api_key" % sys.argv[0])
+    print("Usage: %s api_key" % sys.argv[0])
     sys.exit()
 
 main_api = "http://api.openweathermap.org/data/2.5/weather?"
@@ -27,7 +27,7 @@ while True:
         'units': units,
     }
 
-    url = main_api + urllib.parse.urlencode( api_param )
+    url = main_api + urllib.parse.urlencode(api_param)
 
     json_data = requests.get(url).json()
 
@@ -42,7 +42,8 @@ while True:
         print('Something got wrong. Stoping for now')
         break
 
-    location_latlng = str(json_data['coord']['lat']) +','+ str(json_data['coord']['lon'])
+    location_latlng = (
+        str(json_data['coord']['lat']) + ',' + str(json_data['coord']['lon']))
     openweather_id = str(json_data['id'])
 
     print()

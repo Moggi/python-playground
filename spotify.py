@@ -14,7 +14,7 @@ if len(sys.argv) > 1:
     if len(sys.argv) > 2:
         artist = str(sys.argv[2])
 else:
-    print ("Usage: %s username" % sys.argv[0])
+    print("Usage: %s username" % sys.argv[0])
     sys.exit()
 
 token = util.prompt_for_user_token(username)
@@ -36,4 +36,4 @@ if token:
         print('')
 
 else:
-    print ("Can't get token for ", username)
+    print("Can't get token for ", username)

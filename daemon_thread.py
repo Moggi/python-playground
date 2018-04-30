@@ -8,9 +8,11 @@ import logging
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-9s) %(message)s',)
 
+
 def n():
     logging.debug('Starting')
     logging.debug('Exiting')
+
 
 def d():
     logging.debug('Starting')
@@ -27,6 +29,6 @@ if __name__ == '__main__':
     t.start()
 
     d.join(2.0)
-    print ("d.isAlive()", d.isAlive() )
+    print("d.isAlive()", d.isAlive())
     d.join()
     t.join()

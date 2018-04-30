@@ -11,7 +11,9 @@ last_match = None
 
 if len(sys.argv) != 3:
     print('usage: %s <file1> <file2>' % sys.argv[0])
-    print('It will return the last line of file1 that matches some line in file2')
+    print(
+        'It will return the last line of file1' +
+        'that matches some line in file2')
     exit(1)
 
 file1 = sys.argv[1]
@@ -31,6 +33,6 @@ with open(file2) as f:
             if x >= retryCount:
                 break
             else:
-                x+=1
+                x += 1
 
-print( last_match if last_match else 'No matches' )
+print(last_match if last_match else 'No matches')

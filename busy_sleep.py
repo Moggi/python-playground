@@ -1,6 +1,7 @@
 # From Lorenzo Bolla about GIL
 # https://lbolla.info/blog/2013/12/23/python-threads-cython-gil
 
+
 def busy_sleep(n):
     while n > 0:
         n -= 1
