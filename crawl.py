@@ -32,10 +32,7 @@ def get_all_links(page):
             break
     return links
 
-page = get_page(url)
-page_content = page.text if page.status_code == 200 else ''
-
-links = get_all_links(page_content)
+links = [url]
 visited_links = []
 
 while len(links):
