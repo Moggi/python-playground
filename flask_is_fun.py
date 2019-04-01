@@ -1,3 +1,4 @@
+from json import dumps
 from flask import Flask
 
 app = Flask(__name__)
@@ -5,6 +6,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return 'Hello World!'
+    return dumps({
+        'code': 200,
+        'status': 'OK',
+        'response': 'Hello World!'
+    })
 
-app.run(port=5000)
+
+if __name__ == "__main__":
+    app.run(host='127.0.0.1', port=5000, debug=True)
