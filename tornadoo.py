@@ -10,18 +10,27 @@ from tornado.httpclient import AsyncHTTPClient
 import aioredis
 import environ
 
-env = environ.Env()
-env.read_env()
+ENV = environ.Env()
+ENV.read_env()
 
 
 class MainHandler(RequestHandler):
 
     async def get(self):
-        pool = await aioredis.create_pool(
-                address=env('REDIS_URI'),
-                password=env('REDIS_SECRET'),
-                minsize=5, maxsize=10
+        try:
+            pool = await aioredis.create_pool(
+                address=self.settings.get('REDIS_URI'),
+                password=self.settings.get('REDIS_SECRET'),
+                minsize=2, maxsize=10, create_connection_timeout=5
             )
+        # except asyncio.TimeoutError as e:
+            # First time raises an asyncio.TimeOutError
+            # raise HTTPError()
+            # raise HTTPError(log_message='')
+        except Exception as _e:
+            # Subsequent times raises an OSError with errno = 65
+            # message = 'No route to host'
+            raise _e
         await pool.execute('set', 'my_key', 'value')
         print(await pool.execute('get', 'my_key'))
         pool.close()
@@ -35,7 +44,7 @@ async def asynchronous_fetch(url):
     return response.body
 
 
-def make_app(**settings):
+def make_app(settings):
     return Application(
         [
             (r"/", MainHandler),
@@ -45,6 +54,11 @@ def make_app(**settings):
 
 
 if __name__ == "__main__":
-    app = make_app(debug=True)
-    app.listen(port=8888, address='127.0.0.1')
+    SETTINGS = {
+        'debug': True,
+        'REDIS_URI': ENV('REDIS_URI'),
+        'REDIS_SECRET': ENV('REDIS_SECRET'),
+    }
+    APP = make_app(SETTINGS)
+    APP.listen(port=8888, address='127.0.0.1')
     IOLoop.current().start()
