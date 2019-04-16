@@ -9,6 +9,7 @@ from tornado.ioloop import IOLoop
 from tornado.httpclient import AsyncHTTPClient
 import aioredis
 import environ
+import asyncio
 
 ENV = environ.Env()
 ENV.read_env()
@@ -23,13 +24,14 @@ class MainHandler(RequestHandler):
                 password=self.settings.get('REDIS_SECRET'),
                 minsize=2, maxsize=10, create_connection_timeout=5
             )
-        # except asyncio.TimeoutError as e:
+        except asyncio.TimeoutError as _e:
             # First time raises an asyncio.TimeOutError
-            # raise HTTPError()
-            # raise HTTPError(log_message='')
+            # but only if aioredis can't access the docker network
+            raise _e
         except Exception as _e:
-            # Subsequent times raises an OSError with errno = 65
-            # message = 'No route to host'
+            # Subsequent times raises an OSError with errno = 65 with message
+            # 'No route to host'. But if the docker network goes up again, them
+            # it will return OSError(err, f'Connect call failed {address})
             raise _e
         await pool.execute('set', 'my_key', 'value')
         print(await pool.execute('get', 'my_key'))
