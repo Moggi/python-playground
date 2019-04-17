@@ -33,10 +33,10 @@ class MainHandler(RequestHandler):
             # 'No route to host'. But if the docker network goes up again, them
             # it will return OSError(err, f'Connect call failed {address})
             raise _e
-        await pool.execute('set', 'my_key', 'value')
-        print(await pool.execute('get', 'my_key'))
-        pool.close()
-        await pool.wait_closed()
+        with (await pool) as conn:
+            await conn.execute('set', 'my_key', 'value')
+            value = await conn.execute('get', 'my_key')
+            print(value)
         self.write('Hello, world!')
 
 
